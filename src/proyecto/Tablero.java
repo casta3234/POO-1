@@ -21,7 +21,6 @@ public class Tablero extends JPanel implements ActionListener {
     private Raqueta r1, r2;
     private Pelota p;
     private int width;
-    private int nBloques;
     private ArrayList<Bloque> bloque;
 
     public Tablero(JFrame v, String url, String urlR1, String urlR2) {
@@ -36,11 +35,6 @@ public class Tablero extends JPanel implements ActionListener {
         this.add(r2);
         this.addKeyListener(r1);
         this.addKeyListener(r2);
-
-        Thread tr1 = new Thread(r1);
-        Thread tr2 = new Thread(r2);
-        tr1.start();
-        tr2.start();
 
         this.width = v.getWidth();
 
@@ -78,7 +72,6 @@ public class Tablero extends JPanel implements ActionListener {
                 b.setVisible(true);
             }
 
-            this.nBloques++;
         } else {
             newBloque = null;
             System.gc();
@@ -117,10 +110,26 @@ public class Tablero extends JPanel implements ActionListener {
         for (Bloque b : this.bloque) {
             if (this.p.intersectsVertical(b.getR())) {
                 this.p.setAngulox(-this.p.getAngulox());
+                b.MenosVida();
             } else if (this.p.intersectsHorizontal(b.getR())) {
                 this.p.setAnguloy(-this.p.getAnguloy());
+                b.MenosVida();
             }
         }
+    }
+
+    public void BorrarBloques() {
+        int i = 0;
+        Bloque b1 = null;
+        for (Bloque b : this.bloque) {
+
+            if (b.getVida() < 1) {
+                b.setVisible(false);
+                b1 = b;
+            }
+        }
+        this.bloque.remove(b1);
+        System.gc();
     }
 
     public void salida() {
@@ -157,8 +166,9 @@ public class Tablero extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         this.checkColision();
+        this.BorrarBloques();
         this.salida();
-        if (this.nBloques < 10) {
+        if (this.bloque.size() < 10) {
             this.makeBloque();
         }
 

@@ -22,6 +22,7 @@ public class Pelota extends JLabel implements ActionListener {
     private int angulox;
     private Rectangle r;
     private int contador;
+    private ImageIcon img;
 
     public Pelota(int x, int y) {
         super();
@@ -30,7 +31,7 @@ public class Pelota extends JLabel implements ActionListener {
         this.angulox = 1 + (int) (Math.random() * 10) % 3;
         this.anguloy = 1 + (int) (Math.random() * 10) % 3;
 
-        ImageIcon img = new ImageIcon("imagenes/Pelotas/pelota_3.png");
+        this.img = new ImageIcon("imagenes/Pelotas/pelota_3.png");
         this.setIcon(img);
 
         this.setSize(img.getIconWidth(), img.getIconHeight());
