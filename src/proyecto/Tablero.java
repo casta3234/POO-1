@@ -81,12 +81,14 @@ public class Tablero extends JPanel implements ActionListener {
     public void checkColision() {
         if (this.p.intersectsVertical(this.r1.getR())) {
             this.p.setAngulox(-this.p.getAngulox());
+            this.p.setRaqueta(true);
             if (this.p.getDelay() > 2) {
                 this.p.setDelay(this.p.getDelay() - 2);
                 this.timer.setDelay(this.p.getDelay());
             }
         } else if (this.p.intersectsHorizontal(this.r1.getR())) {
             this.p.setAnguloy(-this.p.getAnguloy());
+            this.p.setRaqueta(true);
             if (this.p.getDelay() > 2) {
                 this.p.setDelay(this.p.getDelay() - 2);
                 this.timer.setDelay(this.p.getDelay());
@@ -95,12 +97,14 @@ public class Tablero extends JPanel implements ActionListener {
 
         if (this.p.intersectsVertical(this.r2.getR())) {
             this.p.setAngulox(-this.p.getAngulox());
+            this.p.setRaqueta(false);
             if (this.p.getDelay() > 2) {
                 this.p.setDelay(this.p.getDelay() - 2);
                 this.timer.setDelay(this.p.getDelay());
             }
         } else if (this.p.intersectsHorizontal(this.r2.getR())) {
             this.p.setAnguloy(-this.p.getAnguloy());
+            this.p.setRaqueta(false);
             if (this.p.getDelay() > 2) {
                 this.p.setDelay(this.p.getDelay() - 2);
                 this.timer.setDelay(this.p.getDelay());
@@ -111,9 +115,11 @@ public class Tablero extends JPanel implements ActionListener {
             if (this.p.intersectsVertical(b.getR())) {
                 this.p.setAngulox(-this.p.getAngulox());
                 b.MenosVida();
+                break;
             } else if (this.p.intersectsHorizontal(b.getR())) {
                 this.p.setAnguloy(-this.p.getAnguloy());
                 b.MenosVida();
+                break;
             }
         }
     }
@@ -126,10 +132,19 @@ public class Tablero extends JPanel implements ActionListener {
             if (b.getVida() < 1) {
                 b.setVisible(false);
                 b1 = b;
+                if(b.getNumero()==2){
+                    if(this.p.getRaqueta()==true){
+                    this.r1.changeLargo(1);
+                }
+                else{
+                    this.r2.changeLargo(1);
+                }
+                }
+                break;
             }
         }
         this.bloque.remove(b1);
-        System.gc();
+       
     }
 
     public void salida() {
@@ -141,6 +156,8 @@ public class Tablero extends JPanel implements ActionListener {
             this.p.setDelay(10);
             this.timer.setDelay(10);
             this.p.changePelota();
+            this.p.setRaqueta(false);
+            this.r1.changeLargo(-2);
         }
 
         if (this.p.getx() > 1010) {
@@ -151,6 +168,8 @@ public class Tablero extends JPanel implements ActionListener {
             this.p.setDelay(10);
             this.timer.setDelay(10);
             this.p.changePelota();
+            this.p.setRaqueta(true);
+            this.r2.changeLargo(-2);
         }
         this.r1.setVisible(false);
         this.r1.setVisible(true);

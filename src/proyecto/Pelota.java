@@ -23,6 +23,7 @@ public class Pelota extends JLabel implements ActionListener {
     private Rectangle r;
     private int contador;
     private ImageIcon img;
+    private boolean raqueta;
 
     public Pelota(int x, int y) {
         super();
@@ -44,6 +45,7 @@ public class Pelota extends JLabel implements ActionListener {
         timer.start();
 
         this.contador = 0;
+        this.raqueta=true;
     }
 
     public boolean intersectsVertical(Rectangle r) {
@@ -116,6 +118,14 @@ public class Pelota extends JLabel implements ActionListener {
 
     public int getAngulox() {
         return angulox;
+    }
+
+    public boolean getRaqueta() {
+        return raqueta;
+    }
+
+    public void setRaqueta(boolean raqueta) {
+        this.raqueta = raqueta;
     }
 
     public int getAnguloy() {
